@@ -1,0 +1,26 @@
+  spring:
+    data:
+      cassandra:
+        keyspace-name: catalog
+        username: WKTDSdRXwDUueRdGGMhhcgxc
+        password: 2,rZz9S8xX08Z8FHGF1chbpuFWaaTZzd36sS89OMkDjto+6G8qw,7ftXpoTHGj5r90ZuWrMxUcbssSUGY,9T3c89kOR+LlqzcjIR9z.,1MKunJz1RqWPTZ,cDTwbZNCA
+        schema-action: create_if_not_exists
+        request:
+          timeout: 10s
+        connection:
+          connect-timeout: 10s
+          init-query-timeout: 10s
+
+#location of the Cassandra DB
+  astra.db:
+    id: 042508cc-c250-4180-ada4-b41c730b8156-1
+    region: asia-south1
+    keyspace: catalog
+    application.token: AstraCS:WKTDSdRXwDUueRdGGMhhcgxc:0c7dbb4f6a9b27d8929541945ad31a27e57cf5f780d0f44c73d6b2f5a3e993db
+
+#location of the driver
+  datastax.astra:
+    secure-connect-bundle: secure-connect-myretail-catalog-db.zip
+
+
+  #insert into product_price (product_id , price ) VALUES ( '1', 33999);
