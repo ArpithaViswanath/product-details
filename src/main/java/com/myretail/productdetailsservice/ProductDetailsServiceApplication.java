@@ -11,11 +11,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.PostConstruct;
 import java.nio.file.Path;
 
 @SpringBootApplication
+@EnableSwagger2
 public class ProductDetailsServiceApplication {
 
     @Bean
