@@ -1,10 +1,8 @@
 package com.myretail.productdetailsservice.controller;
 
-import com.myretail.productdetailsservice.cassandra.models.ProductPrice;
 import com.myretail.productdetailsservice.cassandra.repository.PriceRepository;
-import com.myretail.productdetailsservice.models.MoneyType;
-import com.myretail.productdetailsservice.models.ProductDescription;
-import com.myretail.productdetailsservice.models.ProductDetails;
+import com.myretail.productdetailsservice.models.ResponseBody;
+import com.myretail.productdetailsservice.service.OrchestrationService;
 import com.myretail.productdetailsservice.service.ProductDescriptionService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -20,49 +18,31 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 
-import java.math.BigDecimal;
-import java.time.Duration;
-import java.util.*;
-
 @RestController
 @Slf4j
 @RequestMapping("/products")
 public class ProductDetailsController {
 
     @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
-    private WebClient.Builder webClientBuilder;
-
-    @Autowired
-    private PriceRepository priceRepository;
-
-    @Autowired
-    private ProductDescriptionService productDescriptionService;
+    private OrchestrationService orchestrationService;
 
     @GetMapping("/{productId}")
     @ApiOperation("Fetches all the product details")
     @ApiResponses(
             value = {
-                    @ApiResponse(code = 200, message = "SuccessFul Retrieval of Product Details")
+                    @ApiResponse(code = 200, message = "Successful Retrieval of Product Details")
             }
     )
-    public ResponseEntity<List<ProductDetails>> getProduct(@PathVariable("productId") String productId) {
-
-        ProductDescription productDescription = productDescriptionService.getProductDescription(productId);
-
-        Optional<ProductPrice> priceRepositoryById = priceRepository.findByProductId(productId);
-        if (priceRepositoryById.isPresent()) {
-            String price = priceRepositoryById.get().getPrice();
-            List result = Collections.singletonList(
-                    new ProductDetails(productDescription.getId(), productDescription.getName(),
-                            new MoneyType(new BigDecimal(price), Currency.getInstance(Locale.US)))
-            );
-            return new ResponseEntity<List<ProductDetails>>(result, HttpStatus.OK);
-        } else {
+    public ResponseEntity<ResponseBody> getProduct(@PathVariable("productId") String productId) {
+        try {
+            ResponseBody responseBody = orchestrationService.getResponse(productId);
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        } catch (Exception ex) {
+            log.error("Error occurred while processing request for product id={}, Exception={}", productId, ex);
+            ResponseBody responseBody = orchestrationService.getResponseDuringExceptions(ex.getMessage());
+            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
+        } finally {
 
         }
-        return null;
     }
 }

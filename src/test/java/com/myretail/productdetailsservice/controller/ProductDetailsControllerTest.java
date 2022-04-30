@@ -1,5 +1,6 @@
 package com.myretail.productdetailsservice.controller;
 
+import com.myretail.productdetailsservice.exceptions.ProductDataException;
 import com.myretail.productdetailsservice.models.ProductDescription;
 import com.myretail.productdetailsservice.service.ProductDescriptionService;
 import org.junit.Test;
@@ -7,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +29,8 @@ public class ProductDetailsControllerTest {
     @Test
     public void testGetProduct_notFound() {
         String productId = "11";
-        assertThrows(IllegalStateException.class, ()->productDescriptionService.getProductDescription(productId));
+        ProductDescription productDescription = productDescriptionService.getProductDescription(productId);
+        assertThrows(WebClientResponseException.class, ()->productDescriptionService.getProductDescription(productId));
     }
 
     @Test
