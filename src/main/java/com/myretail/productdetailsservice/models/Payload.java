@@ -17,7 +17,7 @@ public class Payload {
     private String status;
 
     @JsonProperty("productDetails")
-    private List<ProductDetails> productDetails;
+    private List<ProductDetailsResponse> productDetails;
 
     public Payload(String status) {
         this.status = status;

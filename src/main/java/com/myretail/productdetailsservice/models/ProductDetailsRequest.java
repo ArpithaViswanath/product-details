@@ -9,10 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDetails {
-
-    private String id;
+public class ProductDetailsRequest {
     private String name;
     private MoneyType currentPrice;
-
 }

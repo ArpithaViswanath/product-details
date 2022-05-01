@@ -1,6 +1,6 @@
 package com.myretail.productdetailsservice.controller;
 
-import com.myretail.productdetailsservice.models.ProductDescription;
+import com.myretail.productdetailsservice.models.ProductDescriptionResponse;
 import com.myretail.productdetailsservice.service.ProductDescriptionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,21 +21,23 @@ public class ProductDetailsControllerTest {
     @Test
     public void testGetProduct() {
         String productId = "1";
-        ProductDescription productDescription = productDescriptionService.getProductDescription("1");
+        ProductDescriptionResponse productDescription = productDescriptionService.getProductDescription("1");
         assertEquals(productDescription.getName(), productId);
     }
 
     @Test
     public void testGetProduct_notFound() {
         String productId = "11";
-        ProductDescription productDescription = productDescriptionService.getProductDescription(productId);
+        ProductDescriptionResponse productDescription = productDescriptionService.getProductDescription(productId);
         assertThrows(WebClientResponseException.class, ()->productDescriptionService.getProductDescription(productId));
     }
 
     @Test
     public void testUpdateProduct() {
-        ProductDescription productDescription = new ProductDescription("10", "Laptop");
-        ProductDescription updatedProduct = productDescriptionService.updateProductDescription(productDescription);
+        String productId = "10";
+        String productName = "Laptop";
+        ProductDescriptionResponse productDescription = new ProductDescriptionResponse("10", "Laptop");
+        ProductDescriptionResponse updatedProduct = productDescriptionService.updateProductDescription(productId, productName);
         assertEquals(updatedProduct.getId(), productDescription.getId());
         assertEquals(updatedProduct.getName(), productDescription.getName());
     }
