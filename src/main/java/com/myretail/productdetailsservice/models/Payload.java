@@ -18,4 +18,8 @@ public class Payload {
 
     @JsonProperty("productDetails")
     private List<ProductDetails> productDetails;
+
+    public Payload(String status) {
+        this.status = status;
+    }
 }

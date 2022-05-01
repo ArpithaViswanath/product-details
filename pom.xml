@@ -73,6 +73,14 @@
             <version>2.9.2</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.projectreactor.addons/reactor-extra -->
+        <dependency>
+            <groupId>io.projectreactor.addons</groupId>
+            <artifactId>reactor-extra</artifactId>
+            <version>3.3.3.RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>

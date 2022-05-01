@@ -1,6 +1,7 @@
 package com.myretail.productdetailsservice.controller;
 
 import com.myretail.productdetailsservice.cassandra.repository.PriceRepository;
+import com.myretail.productdetailsservice.constants.ProductDetailsServiceConstants;
 import com.myretail.productdetailsservice.models.ResponseBody;
 import com.myretail.productdetailsservice.service.OrchestrationService;
 import com.myretail.productdetailsservice.service.ProductDescriptionService;
@@ -20,20 +21,20 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Slf4j
-@RequestMapping("/products")
+@RequestMapping("/v1/products")
 public class ProductDetailsController {
 
     @Autowired
     private OrchestrationService orchestrationService;
 
-    @GetMapping("/{productId}")
+    @GetMapping(ProductDetailsServiceConstants.QUERY_PARAM_PRODUCT_ID)
     @ApiOperation("Fetches all the product details")
     @ApiResponses(
             value = {
                     @ApiResponse(code = 200, message = "Successful Retrieval of Product Details")
             }
     )
-    public ResponseEntity<ResponseBody> getProduct(@PathVariable("productId") String productId) {
+    public ResponseEntity<ResponseBody> getProduct(@PathVariable(ProductDetailsServiceConstants.PRODUCT_ID) String productId) {
         try {
             ResponseBody responseBody = orchestrationService.getResponse(productId);
             return new ResponseEntity<>(responseBody, HttpStatus.OK);

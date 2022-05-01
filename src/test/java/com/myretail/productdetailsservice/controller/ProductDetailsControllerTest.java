@@ -1,6 +1,5 @@
 package com.myretail.productdetailsservice.controller;
 
-import com.myretail.productdetailsservice.exceptions.ProductDataException;
 import com.myretail.productdetailsservice.models.ProductDescription;
 import com.myretail.productdetailsservice.service.ProductDescriptionService;
 import org.junit.Test;
